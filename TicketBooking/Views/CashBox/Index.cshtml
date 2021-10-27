@@ -1,0 +1,13 @@
+﻿@model CashBoxViewModel
+
+<div class="container">
+    @foreach (var el in Model.cashBox.tickets)
+    {
+        <div class="alert alert-warning m-3">
+            <b>Концерт: </b>@el.Concert.ExectorName<br>
+            <b>Место: </b>@el.Concert.LocationOfConcert<br>
+            <b>Цена: </b>@el.Concert.Price<br>
+        </div>
+    }
+    <div class="btn btn-danger" asp-controller="Order">Купить</div>
+</div>

@@ -1,0 +1,9 @@
+﻿<h2>@Model.currConcert</h2>
+<div class="row mt-5 mb-2">
+    @{
+        foreach (Concert concert in Model.GetAllConcerts)
+        {
+            @Html.Partial("AllConcerts", concert);
+        }
+    }
+</div>
