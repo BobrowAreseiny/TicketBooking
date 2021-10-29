@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using TicketBooking.Data.Interfaces;
+using TicketBooking.Data.Models;
 using TicketBooking.Models;
 
 namespace TicketBooking.Controllers
@@ -12,7 +14,12 @@ namespace TicketBooking.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        //private readonly IConcertCatalog _concertRepository;
 
+        //public HomeController(IConcertCatalog concertRepository)
+        //{
+        //    _concertRepository = concertRepository;
+        //}
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;

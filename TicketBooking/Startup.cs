@@ -44,7 +44,10 @@ namespace TicketBooking
             services.AddTransient<IConcertCatalog, ConcertRepository>();
             services.AddTransient<IConcertTicket, TicketRepository>();
 
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
             services.AddScoped(sp => CashBox.GetTickets(sp));         
             services.AddMvc();  
             services.AddMemoryCache();
@@ -60,7 +63,7 @@ namespace TicketBooking
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
                 app.UseStaticFiles();
-                app.UseSession();
+                //app.UseSession();
                 // app.UseMvcWithDefaultRoute();
             }
             else
@@ -69,6 +72,7 @@ namespace TicketBooking
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();            
             app.UseRouting();

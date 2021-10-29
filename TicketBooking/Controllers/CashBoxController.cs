@@ -15,7 +15,7 @@ namespace TicketBooking.Controllers
         private readonly IConcertCatalog _concertRepository;
         private readonly CashBox  _cashBox;
 
-        public CashBoxController(ConcertRepository concertRepository, CashBox cashBox)
+        public CashBoxController(IConcertCatalog concertRepository, CashBox cashBox)
         {
             _concertRepository = concertRepository;
             _cashBox = cashBox;

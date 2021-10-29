@@ -50,11 +50,9 @@ namespace TicketBooking.Data.Models
             applicationDbContext.SaveChanges();
         }
 
-
         public List<Ticket> GetTickets()
         {
             return applicationDbContext.Tickets.Where(p => p.CashBoxID == cashBoxID).Include(c => c.Concert).ToList();
         }
-
     }
 }
