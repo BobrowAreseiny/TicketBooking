@@ -18,10 +18,24 @@ namespace TicketBooking.Data.Repository
             this.cashBox = cashBox;
         }
 
-
         public void CreateOrder(Ticket ticket)
         {
-            //applicationDbContext.
+            ticket.ByTime = DateTime.Now;
+            applicationDbContext.Tickets.Add(ticket);
+
+            var items = cashBox.tickets;
+
+            foreach(var a in items)
+            {
+                var orderDetail = new Ticket()
+                {
+                    ConcertID = a.Concert.ID,
+                    Price = a.Concert.Price,
+
+                };
+                applicationDbContext.Tickets.Add(orderDetail);
+            }
+            applicationDbContext.SaveChanges();
         }
     }
 }

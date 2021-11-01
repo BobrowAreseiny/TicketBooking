@@ -6,7 +6,7 @@ using TicketBooking.Data.Models;
 
 namespace TicketBooking.Data.Interfaces
 {
-    interface IAllOrders
+    public interface IAllOrders
     {
         void CreateOrder(Ticket ticket);
     }

@@ -20,7 +20,9 @@ namespace TicketBooking.Data.Models
 
 
         public int TypeOfConcertID { get; set; }
-        public virtual List<Ticket> Ticket { get; set; }
+
+        public List<Ticket> Ticket { get; set; }
+
         public virtual TypeOfConcert TypeOfConcert { get; set; }
     }
 }

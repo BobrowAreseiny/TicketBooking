@@ -42,10 +42,12 @@ namespace TicketBooking.Data.Models
        
         public void AddToCashBox(Concert concert)
         {
+            //applicationDbContext.Tickets.First();
             applicationDbContext.Tickets.Add(new Ticket()
             {
                 CashBoxID = cashBoxID,
                 Concert = concert,
+                Account = applicationDbContext.Accounts.First()
             });
             applicationDbContext.SaveChanges();
         }

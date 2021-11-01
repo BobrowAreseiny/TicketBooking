@@ -11,12 +11,15 @@ namespace TicketBooking.Data.Models
         [Key]
         public int ID { get; set; }
         public string CashBoxID { get; set; }
+        public DateTime ByTime { get; set; }
+        public int Price { get; set; }
 
+        public int AccountID { get; set; }
         public int ConcertID { get; set; }
-        public int UserID { get; set; }
+
 
         public virtual Concert Concert { get; set; }
-        public virtual Account Account { get; set; }
+        public virtual Account Account { get; set; }      
 
     }
 }

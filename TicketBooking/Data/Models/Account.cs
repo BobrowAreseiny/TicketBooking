@@ -13,10 +13,10 @@ namespace TicketBooking.Data.Models
 
         public string Login { get; set; }
         public string Password { get; set; }
-        public int UseraId { get; set; }
-
-        public virtual List<Ticket> Ticket { get; set; }
+        public int UserID { get; set; }
+      
         public virtual User User { get; set; }
 
+        public List<Ticket> Ticket { get; set; }
     }
 }

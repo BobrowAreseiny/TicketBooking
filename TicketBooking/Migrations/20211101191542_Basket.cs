@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TicketBooking.Migrations
 {
-    public partial class DB : Migration
+    public partial class Basket : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,9 +94,10 @@ namespace TicketBooking.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CashBoxID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcertID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    AccountID = table.Column<int>(type: "int", nullable: true)
+                    ByTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    AccountID = table.Column<int>(type: "int", nullable: false),
+                    ConcertID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,7 +107,7 @@ namespace TicketBooking.Migrations
                         column: x => x.AccountID,
                         principalTable: "Accounts",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Tickets_Concerts_ConcertID",
                         column: x => x.ConcertID,

@@ -10,15 +10,8 @@ namespace TicketBooking.Data
 {
     public class AddToDb
     {
-        public static void PutAndTake(/*IApplicationBuilder app*/ApplicationDbContext context)
+        public static void PutAndTake(ApplicationDbContext context)
         {
-
-            //ApplicationDbContext context;
-            //using (var scope = app.ApplicationServices.CreateScope())
-            //{
-            //    context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            //}
-            
             if (!context.TypeOfConcerts.Any())
             {
                 context.TypeOfConcerts.AddRange(TypeOfConcerts.Select(c => c.Value));
@@ -38,7 +31,7 @@ namespace TicketBooking.Data
             if (!context.Tickets.Any())
             {
                 context.Tickets.AddRange(Tickets.Select(c => c.Value));
-            }                   
+            }
             context.SaveChanges();
         }
 
@@ -130,6 +123,7 @@ namespace TicketBooking.Data
                 return account;
             }
         }
+       
         private static Dictionary<string, Ticket> tickets;
         public static Dictionary<string, Ticket> Tickets
         {
@@ -139,17 +133,17 @@ namespace TicketBooking.Data
                 {
                     var list = new Ticket[]
                     {
-                        new Ticket{ Concert = Concerts["Metalica"], Account =  Accounts["1"]},
-                        new Ticket{ Concert = Concerts["Fluer"], Account =  Accounts["2"]}
+                        new Ticket{Account =  Accounts["1"], ByTime = DateTime.Now, Concert = Concerts["Metalica"], Price=100},
+                        new Ticket{Account =  Accounts["2"], ByTime = DateTime.Now, Concert = Concerts["Fluer"], Price=200}
                     };
                     tickets = new Dictionary<string, Ticket>();
                     foreach (var el in list)
                     {
-                        tickets.Add(el.Account.Password,el);
+                        tickets.Add(el.Account.Password, el);
                     }
                 }
                 return tickets;
             }
         }
-    }
+    } 
 }

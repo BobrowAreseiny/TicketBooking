@@ -10,8 +10,8 @@ using TicketBooking.Data;
 namespace TicketBooking.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211101164710_DB")]
-    partial class DB
+    [Migration("20211101191940_NewDB")]
+    partial class NewDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,10 +34,7 @@ namespace TicketBooking.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UseraId")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -89,8 +86,11 @@ namespace TicketBooking.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AccountID")
+                    b.Property<int>("AccountID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("ByTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CashBoxID")
                         .HasColumnType("nvarchar(max)");
@@ -98,7 +98,7 @@ namespace TicketBooking.Migrations
                     b.Property<int>("ConcertID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -165,7 +165,9 @@ namespace TicketBooking.Migrations
                 {
                     b.HasOne("TicketBooking.Data.Models.User", "User")
                         .WithMany("Ticket")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -185,7 +187,9 @@ namespace TicketBooking.Migrations
                 {
                     b.HasOne("TicketBooking.Data.Models.Account", "Account")
                         .WithMany("Ticket")
-                        .HasForeignKey("AccountID");
+                        .HasForeignKey("AccountID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TicketBooking.Data.Models.Concert", "Concert")
                         .WithMany("Ticket")

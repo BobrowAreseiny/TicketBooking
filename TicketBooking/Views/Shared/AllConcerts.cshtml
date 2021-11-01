@@ -5,5 +5,5 @@
     <p>Место: @Model.LocationOfConcert</p><br>
     <p>Цена: @Model.Price</p><br>
     <p>Количество билетов: @Model.CountOfTicket</p><br>
-    <p><button class="btn btn-warning" href="#"/>Подробнее</p>
+    <p><a class="btn btn-warning" asp-controller="CashBox" asp-action="addToCashBox" asp-route-ID="@Model.ID">В корзину</a></p>
 </div>
