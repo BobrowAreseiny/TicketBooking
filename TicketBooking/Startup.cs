@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,8 +52,7 @@ namespace TicketBooking
             services.AddScoped(sp => CashBox.GetTickets(sp));         
             services.AddMvc();  
             services.AddMemoryCache();
-            services.AddSession();
-            
+            services.AddSession();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,7 +64,19 @@ namespace TicketBooking
                 app.UseStatusCodePages();
                 app.UseStaticFiles();
                 //app.UseSession();
-                // app.UseMvcWithDefaultRoute();
+                //app.UseMvcWithDefaultRoute();
+                //app.UseEndpoints(routes => 
+                //{
+                //    routes.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+                //    routes.MapControllerRoute(name: "categoryFilter", pattern: "Concert/{action}/{category?}", defaults: new { Controller = "Concert", action="List"});
+                //});
+                //app.UseEndpoints(endpoints =>
+                //{
+                //    endpoints.MapControllerRoute(
+                //        name: "default",
+                //        pattern: "{controller=Home}/{action=Index}/{id?}");
+                //    endpoints.MapRazorPages();
+                //});
             }
             else
             {
@@ -82,14 +94,22 @@ namespace TicketBooking
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                  name: "default",
+                  pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                  name: "categoryFilter",
+                  pattern: "Concert/{action}/{category?}");
             });
-            using (var scope = app.ApplicationServices.CreateScope())
-            {
-                ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                AddToDb.PutAndTake(/*app*/context);
-            }
+            //app.UseEndpoints(endpoints =>
+            //    {
+            //        endpoints.MapControllerRoute(
+            //            name: "default",
+            //            pattern: "{controller=Home}/{action=Index}/{id?}");
+            //        endpoints.MapRazorPages();
+            //    });
+            using var scope = app.ApplicationServices.CreateScope();
+            ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            AddToDb.PutAndTake(/*app*/context);
         }
     }
 }

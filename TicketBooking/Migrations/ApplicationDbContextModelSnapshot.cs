@@ -19,6 +19,32 @@ namespace TicketBooking.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("TicketBooking.Data.Models.Account", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Login")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UseraId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Accounts");
+                });
+
             modelBuilder.Entity("TicketBooking.Data.Models.Concert", b =>
                 {
                     b.Property<int>("ID")
@@ -44,7 +70,12 @@ namespace TicketBooking.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<int>("TypeOfConcertID")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
+
+                    b.HasIndex("TypeOfConcertID");
 
                     b.ToTable("Concerts");
                 });
@@ -55,6 +86,9 @@ namespace TicketBooking.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AccountID")
+                        .HasColumnType("int");
 
                     b.Property<string>("CashBoxID")
                         .HasColumnType("nvarchar(max)");
@@ -67,9 +101,9 @@ namespace TicketBooking.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ConcertID");
+                    b.HasIndex("AccountID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("ConcertID");
 
                     b.ToTable("Tickets");
                 });
@@ -86,9 +120,6 @@ namespace TicketBooking.Migrations
 
                     b.Property<string>("Composer")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ConcertID")
-                        .HasColumnType("int");
 
                     b.Property<string>("Healiner")
                         .HasColumnType("nvarchar(max)");
@@ -107,8 +138,6 @@ namespace TicketBooking.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ConcertID");
-
                     b.ToTable("TypeOfConcerts");
                 });
 
@@ -122,7 +151,7 @@ namespace TicketBooking.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
@@ -130,41 +159,56 @@ namespace TicketBooking.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TicketBooking.Data.Models.Ticket", b =>
+            modelBuilder.Entity("TicketBooking.Data.Models.Account", b =>
                 {
-                    b.HasOne("TicketBooking.Data.Models.Concert", "Concert")
-                        .WithMany("Ticket")
-                        .HasForeignKey("ConcertID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TicketBooking.Data.Models.User", "User")
                         .WithMany("Ticket")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Concert");
+                        .HasForeignKey("UserID");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TicketBooking.Data.Models.TypeOfConcert", b =>
+            modelBuilder.Entity("TicketBooking.Data.Models.Concert", b =>
                 {
+                    b.HasOne("TicketBooking.Data.Models.TypeOfConcert", "TypeOfConcert")
+                        .WithMany("Concert")
+                        .HasForeignKey("TypeOfConcertID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TypeOfConcert");
+                });
+
+            modelBuilder.Entity("TicketBooking.Data.Models.Ticket", b =>
+                {
+                    b.HasOne("TicketBooking.Data.Models.Account", "Account")
+                        .WithMany("Ticket")
+                        .HasForeignKey("AccountID");
+
                     b.HasOne("TicketBooking.Data.Models.Concert", "Concert")
-                        .WithMany("TypeOfConcert")
+                        .WithMany("Ticket")
                         .HasForeignKey("ConcertID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Account");
+
                     b.Navigation("Concert");
+                });
+
+            modelBuilder.Entity("TicketBooking.Data.Models.Account", b =>
+                {
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("TicketBooking.Data.Models.Concert", b =>
                 {
                     b.Navigation("Ticket");
+                });
 
-                    b.Navigation("TypeOfConcert");
+            modelBuilder.Entity("TicketBooking.Data.Models.TypeOfConcert", b =>
+                {
+                    b.Navigation("Concert");
                 });
 
             modelBuilder.Entity("TicketBooking.Data.Models.User", b =>

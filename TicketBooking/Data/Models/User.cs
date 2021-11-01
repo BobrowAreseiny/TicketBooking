@@ -12,8 +12,8 @@ namespace TicketBooking.Data.Models
         public int ID { get; set; }
 
         public string Name { get; set; }
-        public string Password { get; set; }
-
-        public List<Ticket> Ticket { get; set; }
+        public string Surname { get; set; }
+        
+        public virtual List<Account> Ticket { get; set; }
     }
 }

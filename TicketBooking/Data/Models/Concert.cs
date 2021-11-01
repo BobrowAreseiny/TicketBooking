@@ -17,7 +17,10 @@ namespace TicketBooking.Data.Models
         public string LocationOfConcert { get; set; }
         public ushort Price { get; set; }
         public string Img { get; set; }
-        public List<Ticket> Ticket { get; set; }
-        public List<TypeOfConcert> TypeOfConcert { get; set; }
+
+
+        public int TypeOfConcertID { get; set; }
+        public virtual List<Ticket> Ticket { get; set; }
+        public virtual TypeOfConcert TypeOfConcert { get; set; }
     }
 }

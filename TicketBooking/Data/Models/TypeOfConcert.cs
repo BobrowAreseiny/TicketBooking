@@ -19,8 +19,7 @@ namespace TicketBooking.Data.Models
         public string Way { get; set; }
         public string Composer { get; set; }
         public string AgeLimit { get; set; }
-        public int ConcertID { get; set; }
 
-        public Concert Concert { get; set; }
+        public List<Concert> Concert { get; set; }
     }
 }
