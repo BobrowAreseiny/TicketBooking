@@ -41,6 +41,7 @@ namespace TicketBooking
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_confString.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TicketBookingContext")));
             services.AddControllersWithViews();
             services.AddTransient<IConcertCatalog, ConcertRepository>();
             services.AddTransient<IConcertTicket, TicketRepository>();

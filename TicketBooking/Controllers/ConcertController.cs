@@ -30,7 +30,8 @@ namespace TicketBooking.Controllers
             ConcertListViewModel ConcertObject = null;
             if (string.IsNullOrEmpty(category))
             {
-                concerts = _concertCatalog.AllConcerts.OrderBy(i => i.ID);
+                concerts = _concertCatalog.AllConcerts.OrderBy(i => i.ID).Take(10);
+                // Создать отображение данных по 10
             }
             else
             {
@@ -43,7 +44,6 @@ namespace TicketBooking.Controllers
                     concerts = _concertCatalog.AllConcerts.Where(p => p.TypeOfConcert.TypeOfThisConcert.Equals("Вечеринка")).OrderBy(i => i.ID);
                 }
                 concertCategory = _category;
-
 
                 //ViewBag.Title = "Страница с концертами";
                 //ConcertListViewModel concertListViewModel = new ConcertListViewModel

@@ -1,28 +1,7 @@
 ﻿@model Ticket
 <div class="row">
     <h3>Оформоение заказа</h3>
-    <form asp-action="Checkout" method="post" class="form-horizontal">
-        <div class="form-group">
-            <label asp-for="Concert.ExectorName"></label>
-            <div class="col-md-5">
-                <input asp-for="Concert.ExectorName" class="form-control" />
-                <span asp-validation-for="Concert.ExectorName" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Price"></label>
-            <div class="col-md-5">
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="ByTime"></label>
-            <div class="col-md-5">
-                <input asp-for="ByTime" class="form-control" />
-                <span asp-validation-for="ByTime" class="text-danger"></span>
-            </div>
-        </div>
+    <form asp-action="Checkout" method="post" class="form-horizontal">      
         <div class="form-group">
             <label asp-for="Account.User.Name"></label>
             <div class="col-md-5">

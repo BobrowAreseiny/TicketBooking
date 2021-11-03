@@ -1,0 +1,63 @@
+﻿@model List<Concert>
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>List of Concerts</h2>
+@Html.ActionLink("Register New", "AddConcert")
+<table class="table">
+    <tr>
+        <th>
+            ExectorName
+        </th>
+        <th>
+            DateOfConcert
+        </th>
+        <th>
+            CountOfTicket
+        </th>
+        <th>
+            LocationOfConcert
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Img
+        </th>
+    </tr>
+    @foreach (var item in Model)
+     {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.ExectorName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.DateOfConcert)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CountOfTicket)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.ExectorName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.LocationOfConcert)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Img)
+            </td>
+       
+            <td>
+                @Html.ActionLink("Edit","EditConcert", new { id = item.ID})
+            
+                @Html.ActionLink("Details", "DetailsOfConcert", new { id = item.ID})
+            
+                @Html.ActionLink("Delete", "DeleteOfConcert", new { id = item.ID})
+            </td>
+        </tr>
+     }
+</table>
+

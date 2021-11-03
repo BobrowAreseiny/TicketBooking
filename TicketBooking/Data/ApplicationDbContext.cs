@@ -9,6 +9,10 @@ namespace TicketBooking.Data
 {
     public class ApplicationDbContext : DbContext
     {
+        //public ApplicationDbContext() : base("DefaultConnection")
+        //{
+
+        //}
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 

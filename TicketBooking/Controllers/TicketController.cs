@@ -24,5 +24,26 @@ namespace TicketBooking.Controllers
             return View();
         }
 
+
+        [HttpPost]
+        public IActionResult Checkout(Ticket ticket)
+        {
+            cashBox.tickets = cashBox.GetTickets();
+            if(cashBox.tickets.Count == 0)
+            {
+                ModelState.AddModelError("","Добавте товары!");
+            }
+            if (ModelState.IsValid)
+            {
+                AllOrders.CreateOrder(ticket);
+                return RedirectToAction("Complete");
+            }
+            return View();
+        }
+        public IActionResult Complete()
+        {
+            ViewBag.Message = "Заказ успешно обработан";
+            return View();
+        }
     }
 }
