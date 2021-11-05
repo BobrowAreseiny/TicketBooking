@@ -46,6 +46,8 @@ namespace TicketBooking
             services.AddTransient<IConcertCatalog, ConcertRepository>();
             services.AddTransient<IConcertTicket, TicketRepository>();
             services.AddTransient<IAllOrders, OrderRepository>();
+            services.AddTransient<IAdminRepository, AdminRepository>();
+            services.AddTransient<IConcertService, ConcertService>();
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TicketBooking.Data;
 using TicketBooking.Data.Interfaces;
 using TicketBooking.Data.Models;
 using TicketBooking.ViewModels;
@@ -12,9 +7,9 @@ namespace TicketBooking.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly Data.Interfaces.IConcertService _concertService;
+        private readonly IConcertService _concertService;
 
-        public AdminController(Data.Interfaces.IConcertService concertService)
+        public AdminController(IConcertService concertService)
         {
             _concertService = concertService;
         }
@@ -31,7 +26,7 @@ namespace TicketBooking.Controllers
             {
                  Title="Добавить новый кноцерт",
                  AddButtonTitle ="Добавить",
-                 RedirectUrl = Url.Action("Index","Concert")
+                 RedirectUrl = Url.Action("Index", "Concert")
             };
             return View(conNew);
         }
