@@ -19,6 +19,7 @@ namespace TicketBooking.ViewModels
         public string LocationOfConcert { get; set; }
         public ushort Price { get; set; }
         public string Img { get; set; }
+        public int TypeOfConcertID { get; set; }
        
     }
 }

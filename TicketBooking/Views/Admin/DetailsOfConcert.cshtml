@@ -1,0 +1,19 @@
+﻿@model ConcertViewModel
+@{
+    ViewData["Title"] = "DetailsOfConcert";
+}
+
+<h1>DetailsOfConcert</h1>
+@{
+    <div>
+        <h6>Название группы: @Model.ExectorName</h6>
+        <h6>Дата концерта: @Model.DateOfConcert</h6>
+        <h6>Количество билетов: @Model.CountOfTicket</h6>
+        <h6>Картинка:  @Model.Img</h6>
+        <h6>Цена:  @Model.Price</h6>
+        <h6>Место провидения: @Model.LocationOfConcert</h6>
+    </div>
+
+}
+@Html.ActionLink("Back", "Index")
+

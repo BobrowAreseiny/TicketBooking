@@ -1,19 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using TicketBooking.Data.Interfaces;
 using TicketBooking.Data.Models;
-using TicketBooking.Data.Repository;
 
 namespace TicketBooking
 {
-    public class IConcertService : Data.Interfaces.IConcertService
+    public class ConcertService : IConcertService
     {
         private readonly IAdminRepository _adminRepository;
 
-        public IConcertService(IAdminRepository adminRepository)
+        public ConcertService(IAdminRepository adminRepository)
         {
             _adminRepository = adminRepository;
         }
@@ -38,8 +33,6 @@ namespace TicketBooking
         {
             return _adminRepository.UpdateConcert(concert);
         }
-
-
 
         //public async Task<Concert> GetOneConcertAsync(int id)
         //{

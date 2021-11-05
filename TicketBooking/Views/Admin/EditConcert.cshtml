@@ -1,7 +1,57 @@
-﻿
+﻿@model ConcertViewModel
 @{
     ViewData["Title"] = "EditConcert";
 }
 
 <h1>EditConcert</h1>
 
+@using (Html.BeginForm())
+{
+    <fieldset>
+        @Html.HiddenFor(model => model.Id)
+        <br>
+        <p>
+            @Html.LabelFor(model => model.ExectorName, "Название концерта")
+            <br>
+            @Html.EditorFor(model => model.ExectorName)
+            <br>
+        </p>
+        <p>
+            @Html.LabelFor(model => model.DateOfConcert, "Дата концерта")
+            <br>
+            @Html.EditorFor(model => model.DateOfConcert)
+            <br>
+        </p>
+        <p>
+            @Html.LabelFor(model => model.CountOfTicket, "Количество концертов")
+            <br>
+            @Html.EditorFor(model => model.CountOfTicket)
+            <br>
+        </p>
+        <p>
+            @Html.LabelFor(model => model.LocationOfConcert, "Место провидения")
+            <br>
+            @Html.EditorFor(model => model.LocationOfConcert)
+            <br>
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Img, "Постер")
+            <br>
+            @Html.EditorFor(model => model.Img)
+            <br>
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Price, "Цена концерта")
+            <br>
+            @Html.EditorFor(model => model.Price)
+            <br>
+        </p>
+        <p>
+            @Html.LabelFor(model => model.TypeOfConcertID, "Описание концерта")
+            <br>
+            @Html.EditorFor(model => model.TypeOfConcertID)
+            <br>
+        </p>
+        <p><input type="submit" value="Изменить"></p>
+    </fieldset>
+}

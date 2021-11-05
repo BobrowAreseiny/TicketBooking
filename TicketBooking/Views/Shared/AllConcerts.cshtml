@@ -1,9 +1,8 @@
 ﻿@model Concert
 <div class="col-lg-4">
-    <h2>Название: @Model.ExectorName</h2>
+    <h2> @Model.ExectorName</h2>
     <img class="btn btn-warning" src="@Model.Img" height="200" width="200" />
     <p>Место: @Model.LocationOfConcert</p><br>
     <p>Цена: @Model.Price</p><br>
-    <p>Количество билетов: @Model.CountOfTicket</p><br>
     <p><a class="btn btn-warning" asp-controller="CashBox" asp-action="addToCashBox" asp-route-ID="@Model.ID">В корзину</a></p>
 </div>

@@ -1,4 +1,4 @@
-﻿@model List<Concert>
+﻿@model IEnumerable<Concert>
 @{
     ViewData["Title"] = "Index";
 }
@@ -48,14 +48,13 @@
             </td>
             <td>
                 @Html.DisplayFor(model => item.Img)
-            </td>
-       
+            </td>   
             <td>
                 @Html.ActionLink("Edit","EditConcert", new { id = item.ID})
             
                 @Html.ActionLink("Details", "DetailsOfConcert", new { id = item.ID})
             
-                @Html.ActionLink("Delete", "DeleteOfConcert", new { id = item.ID})
+                @Html.ActionLink("Delete", "DeleteConcert", new { id = item.ID})
             </td>
         </tr>
      }

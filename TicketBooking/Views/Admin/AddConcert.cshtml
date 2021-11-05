@@ -1,7 +1,61 @@
-﻿
+﻿@model ConcertViewModel
 @{
     ViewData["Title"] = "AddConcert";
 }
 
 <h1>AddConcert</h1>
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.ExectorName, "Название концерта")
+    <br>
+    @Html.EditorFor(model => model.ExectorName)
+    <br>
+
+    @Html.LabelFor(model => model.DateOfConcert, "Дата концерта")
+    <br>
+    @Html.EditorFor(model => model.DateOfConcert)
+    <br>
+
+    @Html.LabelFor(model => model.CountOfTicket, "Количество билетов")
+    <br>
+    @Html.EditorFor(model => model.CountOfTicket)
+    <br>
+
+    @Html.LabelFor(model => model.LocationOfConcert, "Место провидения")
+    <br>
+    @Html.EditorFor(model => model.LocationOfConcert)
+    <br>
+
+    @Html.LabelFor(model => model.Img, "Постер")
+    <br>
+    @Html.EditorFor(model => model.Img)
+    <br>
+
+    @Html.LabelFor(model => model.Price, "Цена концерта")
+    <br>
+    @Html.EditorFor(model => model.Price)
+    <br>
+    @Html.LabelFor(model => model.TypeOfConcertID, "Описание")
+    <br>
+    @Html.EditorFor(model => model.TypeOfConcertID)
+    <br>
+    <input type = "submit" value = "Добавить" />
+}
+@*<br>
+    <input maxlength="25" size="40" value=@Model.ExectorName />
+    <h6>Дата концерта: </h6>
+    <input maxlength="25" size="40" value=@Model.CountOfTicket />
+    <h6>Количество билетов:</h6>
+    <input maxlength="25" size="40" value=@Model.DateOfConcert />
+    <h6>Картинка:</h6>
+    <input maxlength="25" size="40" value=@Model.LocationOfConcert />
+    <h6>Цена:</h6>
+    <input maxlength="25" size="40" value=@Model.Price />
+    <h6>Место провидения:</h6>
+    <input maxlength="25" size="40" value=@Model.Img />
+    @Model.RedirectUrl = "Index"
+    </div>*@
+}
+
+@*@Html.ActionLink("Add", "SaveConcert", new { concertViewModel = Model, redirectUrl = Model.RedirectUrl })*@
 
