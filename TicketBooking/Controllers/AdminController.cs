@@ -32,8 +32,14 @@ namespace TicketBooking.Controllers
         //}
         [HttpGet]
         public ActionResult AddConcert()
-        {         
-            return View();
+        {
+            var conNew = new ConcertViewModel
+            {
+                 Title="Добавить новый кноцерт",
+                 AddButtonTitle ="Добавить",
+                 RedirectUrl = Url.Action("Index","Concert")
+            };
+            return View(conNew);
         }
 
         public ActionResult DetailsOfConcert(int id)
