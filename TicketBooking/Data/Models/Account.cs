@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,10 +15,13 @@ namespace TicketBooking.Data.Models
 
         public string Login { get; set; }
         public string Password { get; set; }
-        public int UserID { get; set; }
+        public int UserID { get; set; }      
       
         public virtual User User { get; set; }
 
         public List<Ticket> Ticket { get; set; }
+
+        public Guid ActivateCode { get; set; }
+
     }
 }

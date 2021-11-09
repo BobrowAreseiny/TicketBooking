@@ -17,7 +17,7 @@ namespace TicketBooking.Controllers
         public ActionResult Index()
         {
             var concert = _concertService.GetConcert();
-            return View(concert);     
+            return View(concert);
         }
 
         //public ActionResult AddConcert()
@@ -35,23 +35,44 @@ namespace TicketBooking.Controllers
         {
             var conNew = new ConcertViewModel
             {
-                 Title="Добавить новый кноцерт",
-                 AddButtonTitle ="Добавить",
-                 RedirectUrl = Url.Action("Index","Concert")
+                Title = "Добавить новый кноцерт",
+                AddButtonTitle = "Добавить",
+                RedirectUrl = Url.Action("Index", "Concert")
             };
             return View(conNew);
         }
+        [HttpPost]
+        public ActionResult AddConcert(ConcertViewModel concertViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var concert = new Concert()
+            {
+                ID = concertViewModel.Id,
+                ExectorName = concertViewModel.ExectorName,
+                CountOfTicket = concertViewModel.CountOfTicket,
+                DateOfConcert = concertViewModel.DateOfConcert,
+                Price = concertViewModel.Price,
+                Img = concertViewModel.Img,
+                LocationOfConcert = concertViewModel.LocationOfConcert,
+                TypeOfConcertID = concertViewModel.TypeOfConcertID
+            };
 
+            _concertService.AddConcert(concert);
+            return RedirectToAction("Index");
+        }
         public ActionResult DetailsOfConcert(int id)
         {
-            var concert =  _concertService.GetSelectedConcert(id);
-            return View(new ConcertViewModel 
-            { 
-                Id = concert.ID, 
-                ExectorName = concert.ExectorName, 
-                CountOfTicket= concert.CountOfTicket, 
-                DateOfConcert = concert.DateOfConcert, 
-                Price = concert.Price, 
+            var concert = _concertService.GetSelectedConcert(id);
+            return View(new ConcertViewModel
+            {
+                Id = concert.ID,
+                ExectorName = concert.ExectorName,
+                CountOfTicket = concert.CountOfTicket,
+                DateOfConcert = concert.DateOfConcert,
+                Price = concert.Price,
                 Img = concert.Img,
                 LocationOfConcert = concert.LocationOfConcert
             });
@@ -61,16 +82,16 @@ namespace TicketBooking.Controllers
         [HttpGet]
         public ActionResult SaveConcert(int id/*, string redirectUrl*/)
         {
-            var concert = _concertService.GetSelectedConcert(id);           
+            var concert = _concertService.GetSelectedConcert(id);
             return View(concert);
         }
 
         [HttpPost]
         public ActionResult SaveConcert(ConcertViewModel concertViewModel/*, string redirectUrl*/)
         {
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
             {
-                return View(concertViewModel); 
+                return View(concertViewModel);
             }
             var concert = _concertService.GetSelectedConcert(concertViewModel.Id);
             if (concert != null)
@@ -87,10 +108,10 @@ namespace TicketBooking.Controllers
             return RedirectToAction("Index");
             //return RedirectToLocation(redirectUrl);
         }
-        
+
         [HttpGet]
         public ActionResult EditConcert(int id)
-        {  
+        {
             var concert = _concertService.GetSelectedConcert(id);
             ConcertViewModel concertViewModel = new ConcertViewModel
             {
@@ -101,7 +122,7 @@ namespace TicketBooking.Controllers
                 Price = concert.Price,
                 Img = concert.Img,
                 LocationOfConcert = concert.LocationOfConcert
-            };        
+            };
             return View(concertViewModel);
         }
         [HttpPost]
@@ -164,28 +185,7 @@ namespace TicketBooking.Controllers
 
 
 
-        [HttpPost]
-        public ActionResult AddConcert(ConcertViewModel concertViewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-            var concert = new Concert()
-            {
-                ID = concertViewModel.Id,
-                ExectorName = concertViewModel.ExectorName,
-                CountOfTicket = concertViewModel.CountOfTicket,
-                DateOfConcert = concertViewModel.DateOfConcert,
-                Price = concertViewModel.Price,
-                Img = concertViewModel.Img,
-                LocationOfConcert = concertViewModel.LocationOfConcert,
-                TypeOfConcertID = concertViewModel.TypeOfConcertID
-            };
 
-            _concertService.AddConcert(concert);
-            return RedirectToAction("Index");
-        }
 
 
         //public async Task<ActionResult> Index()

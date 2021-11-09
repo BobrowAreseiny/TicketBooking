@@ -11,9 +11,9 @@ namespace TicketBooking.Data.Models
         [Key]
         public int ID { get; set; }
 
-        [Display(Name="Введите имя:")]
+        [Display(Name = "Введите имя:")]
         [StringLength(10)]
-        [Required(ErrorMessage ="Поле Имя задано неверно")]
+        [Required(ErrorMessage = "Поле Имя задано неверно")]
         public string Name { get; set; }
 
         public string Surname { get; set; }

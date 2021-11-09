@@ -29,25 +29,16 @@ namespace TicketBooking.Data.Models
 
             return new CashBox(context) { cashBoxID = cashBoxID };
         }
-        //public void AddToCashBox(Concert concert,User user, int amount)
-        //{
-        //    applicationDbContext.Tickets.Add(new Ticket()
-        //    {
-        //        CashBoxID = cashBoxID,
-        //        Concert = concert,
-        //        User = user
-        //    });
-        //    applicationDbContext.SaveChanges();
-        //}
        
         public void AddToCashBox(Concert concert)
         {
-            //applicationDbContext.Tickets.First();
             applicationDbContext.Tickets.Add(new Ticket()
             {
                 CashBoxID = cashBoxID,
                 Concert = concert,
-                Account = applicationDbContext.Accounts.First()
+                Account = applicationDbContext.Accounts.First(),
+                ByTime = DateTime.Now,
+                Price = concert.Price,                          
             });
             applicationDbContext.SaveChanges();
         }

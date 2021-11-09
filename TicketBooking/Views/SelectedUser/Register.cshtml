@@ -1,0 +1,37 @@
+﻿@model AccountViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+
+@using (Html.BeginForm("Register","SelectedUser",FormMethod.Post))
+{
+        @Html.HiddenFor(model => model.Id)
+        <br>      
+        <p>
+            @Html.LabelFor(model => model.Name, "Введите имя")
+            <br>
+            @Html.EditorFor(model => model.Name)
+            <br>
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Surname, "Введите фамилию")
+            <br>
+            @Html.EditorFor(model => model.Surname)
+            <br>
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Login, "Введите логин")
+            <br>
+            @Html.EditorFor(model => model.Login)
+            <br>
+        </p>
+        <p>
+            @Html.LabelFor(model => model.Password, "Введите пароль")
+            <br>
+            @Html.EditorFor(model => model.Password)
+            <br>
+        </p>       
+        <p><input type="submit" value="Регистрация"></p>
+}

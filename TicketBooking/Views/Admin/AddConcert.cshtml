@@ -39,23 +39,22 @@
     <br>
     @Html.EditorFor(model => model.TypeOfConcertID)
     <br>
-    <input type = "submit" value = "Добавить" />
+    <input type="submit" value="Добавить" />
 }
 @*<br>
-    <input maxlength="25" size="40" value=@Model.ExectorName />
-    <h6>Дата концерта: </h6>
-    <input maxlength="25" size="40" value=@Model.CountOfTicket />
-    <h6>Количество билетов:</h6>
-    <input maxlength="25" size="40" value=@Model.DateOfConcert />
-    <h6>Картинка:</h6>
-    <input maxlength="25" size="40" value=@Model.LocationOfConcert />
-    <h6>Цена:</h6>
-    <input maxlength="25" size="40" value=@Model.Price />
-    <h6>Место провидения:</h6>
-    <input maxlength="25" size="40" value=@Model.Img />
-    @Model.RedirectUrl = "Index"
-    </div>*@
-}
-
-@*@Html.ActionLink("Add", "SaveConcert", new { concertViewModel = Model, redirectUrl = Model.RedirectUrl })*@
+        <input maxlength="25" size="40" value=@Model.ExectorName />
+        <h6>Дата концерта: </h6>
+        <input maxlength="25" size="40" value=@Model.CountOfTicket />
+        <h6>Количество билетов:</h6>
+        <input maxlength="25" size="40" value=@Model.DateOfConcert />
+        <h6>Картинка:</h6>
+        <input maxlength="25" size="40" value=@Model.LocationOfConcert />
+        <h6>Цена:</h6>
+        <input maxlength="25" size="40" value=@Model.Price />
+        <h6>Место провидения:</h6>
+        <input maxlength="25" size="40" value=@Model.Img />
+        @Model.RedirectUrl = "Index"
+        </div>
+    }
+@Html.ActionLink("Add", "SaveConcert", new { concertViewModel = Model, redirectUrl = Model.RedirectUrl })*@
 

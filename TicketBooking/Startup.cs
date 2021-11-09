@@ -49,7 +49,6 @@ namespace TicketBooking
             services.AddTransient<IAdminRepository, AdminRepository>();
             services.AddTransient<IConcertService, ConcertService>();
 
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
@@ -67,20 +66,6 @@ namespace TicketBooking
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
                 app.UseStaticFiles();
-                //app.UseSession();
-                //app.UseMvcWithDefaultRoute();
-                //app.UseEndpoints(routes => 
-                //{
-                //    routes.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
-                //    routes.MapControllerRoute(name: "categoryFilter", pattern: "Concert/{action}/{category?}", defaults: new { Controller = "Concert", action="List"});
-                //});
-                //app.UseEndpoints(endpoints =>
-                //{
-                //    endpoints.MapControllerRoute(
-                //        name: "default",
-                //        pattern: "{controller=Home}/{action=Index}/{id?}");
-                //    endpoints.MapRazorPages();
-                //});
             }
             else
             {
@@ -104,13 +89,6 @@ namespace TicketBooking
                   name: "categoryFilter",
                   pattern: "Concert/{action}/{category?}");
             });
-            //app.UseEndpoints(endpoints =>
-            //    {
-            //        endpoints.MapControllerRoute(
-            //            name: "default",
-            //            pattern: "{controller=Home}/{action=Index}/{id?}");
-            //        endpoints.MapRazorPages();
-            //    });
             using var scope = app.ApplicationServices.CreateScope();
             ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             AddToDb.PutAndTake(/*app*/context);
