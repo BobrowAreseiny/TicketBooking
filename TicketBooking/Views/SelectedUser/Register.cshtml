@@ -4,34 +4,57 @@
 }
 
 <h1>Register</h1>
-
-@using (Html.BeginForm("Register","SelectedUser",FormMethod.Post))
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
 {
-        @Html.HiddenFor(model => model.Id)
-        <br>      
-        <p>
-            @Html.LabelFor(model => model.Name, "Введите имя")
-            <br>
-            @Html.EditorFor(model => model.Name)
-            <br>
-        </p>
-        <p>
-            @Html.LabelFor(model => model.Surname, "Введите фамилию")
-            <br>
-            @Html.EditorFor(model => model.Surname)
-            <br>
-        </p>
-        <p>
-            @Html.LabelFor(model => model.Login, "Введите логин")
-            <br>
-            @Html.EditorFor(model => model.Login)
-            <br>
-        </p>
-        <p>
-            @Html.LabelFor(model => model.Password, "Введите пароль")
-            <br>
-            @Html.EditorFor(model => model.Password)
-            <br>
-        </p>       
-        <p><input type="submit" value="Регистрация"></p>
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success">
+            <strong>Success! </strong>@ViewBag.Message
+        </div>
+    }
 }
+else
+{
+    @using (Html.BeginForm("Register", "SelectedUser", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <a>
+            @Html.HiddenFor(model => model.Id)
+            <br>
+            <p>
+                @Html.LabelFor(model => model.Name, "Введите имя")
+                <br>
+                @Html.EditorFor(model => model.Name)
+                <br>
+            </p>
+            <p>
+                @Html.LabelFor(model => model.Surname, "Введите фамилию")
+                <br>
+                @Html.EditorFor(model => model.Surname)
+                <br>
+            </p>
+            <p>
+                @Html.LabelFor(model => model.Login, "Введите логин")
+                <br>
+                @Html.EditorFor(model => model.Login)
+                @Html.ValidationMessage("LoginExist", new { @class = "text-danger" })
+                <br>
+            </p>
+            <p>
+                @Html.LabelFor(model => model.Password, "Введите пароль")
+                <br>
+                @Html.EditorFor(model => model.Password)
+                <br>
+            </p>
+        </a><p><input type="submit" value="Регистрация"></p>
+        if (ViewBag.Message != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Error! </strong>@ViewBag.Message
+            </div>
+        }
+    }
+}
+@*<div class="alert alert-danger">
+   @Html.ActionLink("Home","Index")
+</div>*@

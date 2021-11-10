@@ -16,6 +16,7 @@ namespace TicketBooking.Data.Models
         public string Login { get; set; }
         public string Password { get; set; }
         public int UserID { get; set; }      
+        public bool IsUserValid { get; set; }      
       
         public virtual User User { get; set; }
 

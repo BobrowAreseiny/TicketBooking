@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using TicketBooking.Data;
 using TicketBooking.Data.Models;
@@ -17,6 +18,7 @@ namespace TicketBooking.Controllers
         {
             _applicationDbContext = applicationDbContext;
         }
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -24,39 +26,49 @@ namespace TicketBooking.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(/*Bind[Exclude = ""]*/ AccountViewModel accountViewModel)
+        [ValidateAntiForgeryToken]
+        public IActionResult Register(/*[Bind(include: "IsUserValid,ActivateCode")]*/ AccountViewModel accountViewModel)
         {
-            if (ModelState.IsValid)
+            bool status = false;
+            string message = "";
+
+            //Validation
+            if (!ModelState.IsValid)
             {
-                return View(accountViewModel);
-            }
-            var a = _applicationDbContext.Users.FirstOrDefault(f => f.ID == accountViewModel.Id);
-            var b = _applicationDbContext.Accounts.FirstOrDefault(f => f.ID == accountViewModel.Id);
-            User newUser = null;
-            if (a == null && b == null)
-            {
-                newUser = new User()
+                var loginIsExist = IsLoginExist(accountViewModel.Login);
+                if (loginIsExist)
+                {
+                    ModelState.AddModelError("LoginExist", "Логин занят");
+                }
+                //Activate Code
+                accountViewModel.ActivateCode = Guid.NewGuid();
+                //Hash
+                accountViewModel.Password = Crypto.Hash(accountViewModel.Password);
+                //accountViewModel.ConfirmPassword = Crypto.Hash(accountViewModel.ConfirmPassword);
+
+
+                accountViewModel.IsUserConfirm = false;
+
+                //Save in database
+                var user = new User()
                 {
                     Name = accountViewModel.Name,
-                    Surname = accountViewModel.Surname,
-                    ID = accountViewModel.Id
+                    Surname = accountViewModel.Surname
                 };
                 var account = new Account()
                 {
                     Login = accountViewModel.Login,
                     Password = accountViewModel.Password,
-                    UserID = newUser.ID
+                    ActivateCode = accountViewModel.ActivateCode,
+                    IsUserValid = accountViewModel.IsUserConfirm,
+                    UserID = user.ID
                 };
-                NewUser(newUser);
+                _applicationDbContext.Users.Add(user);
                 _applicationDbContext.Accounts.Add(account);
                 _applicationDbContext.SaveChanges();
-                a = _applicationDbContext.Users.FirstOrDefault(f => f.ID == accountViewModel.Id);
-                b = _applicationDbContext.Accounts.FirstOrDefault(f => f.ID == accountViewModel.Id);
 
-                if (a != null && b != null)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                //SendVerificationLinkEmail(accountViewModel.Login, accountViewModel.ActivateCode.ToString());
+                //return View(accountViewModel);
             }
             else
             {
@@ -65,10 +77,19 @@ namespace TicketBooking.Controllers
             return View(accountViewModel);
         }
 
-        public User NewUser(User user)
+        [NonAction]
+        public bool IsLoginExist(string email)
         {
-            _applicationDbContext.Users.Add(user);
-            return user;
+            var data = _applicationDbContext.Accounts.FirstOrDefault(f => f.Login == email);
+            return data != null;
         }
-    }
+
+        //[NonAction]
+        //public void SendVerificationLinkEmail(string email, string activationCode)
+        //{
+        //var scheme = Request.Url.Scheme;
+        //var host = Request.Url.Post;
+        //string url = scheme + "://" + host + 
+        //}
+    } 
 }
