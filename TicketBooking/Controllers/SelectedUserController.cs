@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Web;
 using System.Threading.Tasks;
 using TicketBooking.Data;
 using TicketBooking.Data.Models;
 using TicketBooking.ViewModels;
+using System.Security.Policy;
+using Microsoft.AspNetCore.Http;
 
 namespace TicketBooking.Controllers
 {
@@ -55,6 +57,9 @@ namespace TicketBooking.Controllers
                     Name = accountViewModel.Name,
                     Surname = accountViewModel.Surname
                 };
+              
+                _applicationDbContext.Users.Add(user);
+                _applicationDbContext.SaveChanges();
                 var account = new Account()
                 {
                     Login = accountViewModel.Login,
@@ -63,7 +68,6 @@ namespace TicketBooking.Controllers
                     IsUserValid = accountViewModel.IsUserConfirm,
                     UserID = user.ID
                 };
-                _applicationDbContext.Users.Add(user);
                 _applicationDbContext.Accounts.Add(account);
                 _applicationDbContext.SaveChanges();
 
@@ -84,12 +88,31 @@ namespace TicketBooking.Controllers
             return data != null;
         }
 
-        //[NonAction]
-        //public void SendVerificationLinkEmail(string email, string activationCode)
-        //{
-        //var scheme = Request.Url.Scheme;
-        //var host = Request.Url.Post;
-        //string url = scheme + "://" + host + 
-        //}
-    } 
+        [HttpGet]
+        public IActionResult VerifyAccount(string id)
+        {
+            bool status = false;
+            var v = _applicationDbContext.Accounts.Where(a => a.ActivateCode == new Guid(id)).FirstOrDefault();
+            if (v != null)
+            {
+                v.IsUserValid = true;
+                _applicationDbContext.SaveChanges();
+                status = true;
+            }
+            else
+            {
+                ViewBag.Message = "Ошибка запроса";
+            }
+            ViewBag.Status = status;
+            return View();
+        }
+
+        [NonAction]
+        public void SendVerificationLinkEmail(string email, string activationCode)
+        {
+            var verifyUrl = "SelectedUser/VerifyAccount/" + activationCode;
+            var link = Request;
+            //string url = scheme + "://" + host +
+        }
+    }
 }

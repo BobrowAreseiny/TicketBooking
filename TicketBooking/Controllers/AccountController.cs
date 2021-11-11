@@ -34,8 +34,7 @@ namespace TicketBooking.Controllers
                     _applicationDbContext.Users.Add(new User()
                     {
                         Name = accountViewModel.Name,
-                        Surname = accountViewModel.Surname,
-                        ID = accountViewModel.Id
+                        Surname = accountViewModel.Surname
                     });
                     _applicationDbContext.Accounts.Add(new Account()
                     {

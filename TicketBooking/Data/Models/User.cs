@@ -12,10 +12,11 @@ namespace TicketBooking.Data.Models
         public int ID { get; set; }
 
         [Display(Name = "Введите имя:")]
-        [StringLength(10)]
-        [Required(ErrorMessage = "Поле Имя задано неверно")]
+        [Required(AllowEmptyStrings = false ,ErrorMessage = "Поле Имя задано неверно")]
         public string Name { get; set; }
 
+        [Display(Name = "Введите фамилию:")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Поле Имя задано неверно")]
         public string Surname { get; set; }
         
         public List<Account> Ticket { get; set; }

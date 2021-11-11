@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "VerifyAccount";
+}
+
+<h1>VerifyAccount</h1>
+
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+{
+    <div class="alert alert-success">
+        <strong>Успех!</strong>Вы вошли в аккаунт! @Html.ActionLink("Index", "Home", "User")
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">
+        <strong>Ошибка!</strong>@ViewBag.Message
+    </div>
+}
