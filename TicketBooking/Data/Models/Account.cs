@@ -25,18 +25,15 @@ namespace TicketBooking.Data.Models
         [MinLength(10, ErrorMessage = "Ошибка, поле заполнено некорректно")]
         public string Password { get; set; }
 
-        [Display(Name = "Подтвердите пароль:")]
-        [DataType(DataType.Password)]
-        [Compare("Password",ErrorMessage = "Пароли не совпадают")]
-        public string ConfirnPassword { get; set; }
-
-        public Guid ActivateCode { get; set; }
-        public int UserID { get; set; }          
-        public bool IsUserValid { get; set; }   
-              
-        public virtual User User { get; set; }
-
         public List<Ticket> Ticket { get; set; }
+
+        public int UserID { get; set; }          
+              
+        public virtual Client User { get; set; }
+
+        public int? RoleId { get; set; }
+
+        public virtual Role Role { get; set; }
 
     }
 }

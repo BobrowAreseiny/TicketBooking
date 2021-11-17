@@ -1,21 +1,4 @@
 ﻿@model Ticket
 <div class="row">
-    <h3>Оформоение заказа</h3>
-    <form asp-action="Checkout" method="post" class="form-horizontal">      
-        <div class="form-group">
-            <label asp-for="Account.User.Name"></label>
-            <div class="col-md-5">
-                <input asp-for="Account.User.Name" class="form-control" />
-                <span asp-validation-for="Account.User.Name" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Account.Login"></label>
-            <div class="col-md-5">
-                <input asp-for="Account.Login" class="form-control" />
-                <span asp-validation-for="Account.Login" class="text-danger"></span>
-            </div>
-        </div>
-        <input class="btn btn-success" type="submit" value="Перейти к оплате"/>
-    </form>
+    <h3>Что-то для покупки</h3>
 </div>

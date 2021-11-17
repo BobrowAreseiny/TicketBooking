@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -29,17 +30,43 @@ namespace TicketBooking.Data.Models
 
             return new CashBox(context) { cashBoxID = cashBoxID };
         }
-       
-        public void AddToCashBox(Concert concert)
+
+        //public void AddToCashBox(Concert concert, String Emali)
+        //{
+        //    //if (User.Identity.IsAuthenticated)
+        //    //{
+        //    var selectedTickets = new Ticket()
+        //    {
+        //        CashBoxID = cashBoxID,
+        //        Concert = concert,
+        //        Account = applicationDbContext.Accounts.FirstOrDefault(f => f.Login == Emali),
+        //        ByTime = DateTime.Now,
+        //        Price = concert.Price,
+        //    };
+        //    applicationDbContext.Tickets.Add(selectedTickets);
+        //    applicationDbContext.SaveChanges();
+        //    //}
+        //}
+        public void AddToCashBox(Concert concert, String Emali)
         {
-            applicationDbContext.Tickets.Add(new Ticket()
+            //if (User.Identity.IsAuthenticated)
+            //{
+            var selectedTickets = new Ticket()
             {
                 CashBoxID = cashBoxID,
                 Concert = concert,
-                Account = applicationDbContext.Accounts.First(),
+                Account = applicationDbContext.Accounts.FirstOrDefault(f => f.Login == Emali),
                 ByTime = DateTime.Now,
-                Price = concert.Price,                          
-            });
+                Price = concert.Price,
+            };
+            applicationDbContext.Tickets.Add(selectedTickets);
+            applicationDbContext.SaveChanges();
+            //}
+        }
+
+        public void DelFromCashBox(IEnumerable<Ticket> tickets)
+        {   
+            applicationDbContext.Tickets.RemoveRange(tickets);
             applicationDbContext.SaveChanges();
         }
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketBooking.Data;
 
 namespace TicketBooking.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211115134927_Role")]
+    partial class Role
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,6 +28,15 @@ namespace TicketBooking.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<Guid>("ActivateCode")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConfirnPassword")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsUserValid")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -34,15 +45,10 @@ namespace TicketBooking.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("RoleId");
 
                     b.HasIndex("UserID");
 
@@ -63,11 +69,16 @@ namespace TicketBooking.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -119,7 +130,7 @@ namespace TicketBooking.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("TicketBooking.Data.Models.Ticket", b =>
@@ -188,19 +199,22 @@ namespace TicketBooking.Migrations
 
             modelBuilder.Entity("TicketBooking.Data.Models.Account", b =>
                 {
-                    b.HasOne("TicketBooking.Data.Models.Role", "Role")
-                        .WithMany("Accounts")
-                        .HasForeignKey("RoleId");
-
                     b.HasOne("TicketBooking.Data.Models.Client", "User")
                         .WithMany("Ticket")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Role");
-
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TicketBooking.Data.Models.Client", b =>
+                {
+                    b.HasOne("TicketBooking.Data.Models.Role", "Role")
+                        .WithMany("Clients")
+                        .HasForeignKey("RoleId");
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("TicketBooking.Data.Models.Concert", b =>
@@ -250,7 +264,7 @@ namespace TicketBooking.Migrations
 
             modelBuilder.Entity("TicketBooking.Data.Models.Role", b =>
                 {
-                    b.Navigation("Accounts");
+                    b.Navigation("Clients");
                 });
 
             modelBuilder.Entity("TicketBooking.Data.Models.TypeOfConcert", b =>

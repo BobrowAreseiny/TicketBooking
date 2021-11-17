@@ -1,8 +1,33 @@
 ﻿@model Concert
-<div class="col-lg-4">
-    <h2> @Model.ExectorName</h2>
-    <img class="btn btn-warning" src="@Model.Img" height="200" width="200" />
-    <p>Место: @Model.LocationOfConcert</p><br>
-    <p>Цена: @Model.Price</p><br>
-    <p><a class="btn btn-warning" asp-controller="CashBox" asp-action="addToCashBox" asp-route-ID="@Model.ID">В корзину</a></p>
+@*<div class="col-lg-4">
+        <h2> @Model.ExectorName</h2>
+        <img class="btn btn-warning" src="@Model.Img" height="200" width="200" />
+        <p>Место: @Model.LocationOfConcert</p><br>
+        <p>Цена: @Model.Price</p><br>
+        <p><a class="btn btn-warning" asp-controller="CashBox" asp-action="addToCashBox" asp-route-ID="@Model.ID">В корзину</a></p>
+    </div>*@
+<link href="~/css/HomeStyle.css" rel="stylesheet" type="text/css" />
+@*<div class="product-wrap">
+        <div class="product-item">
+            <img src="@Model.Img">
+            <div class="product-buttons">
+                <a class="button" asp-controller="CashBox" asp-action="addToCashBox" asp-route-ID="@Model.ID">В корзину</a>
+            </div>
+        </div>
+        <div class="product-title">
+            <a href="">@Model.ExectorName</a>
+            <span class="product-price">₽ @Model.Price</span>
+        </div>
+    </div>*@
+<div class="wrapper">
+    <div class="flex">
+        <div class="product-item">
+            <img src="@Model.Img">
+            <div class="product-list">
+                <h3>@Model.ExectorName</h3>
+                <div class="price">₽ @Model.Price</div>
+                <div><a class="button" asp-controller="CashBox" asp-action="addToCashBox" asp-route-ID="@Model.ID">В корзину</a></div>
+            </div>
+        </div>
+    </div>
 </div>

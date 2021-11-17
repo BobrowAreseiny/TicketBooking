@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TicketBooking.Data.Interfaces;
 using TicketBooking.Data.Models;
 using TicketBooking.ViewModels;
 
 namespace TicketBooking.Controllers
 {
+    [Authorize(Roles = "Администратор")]
     public class AdminController : Controller
     {
         private readonly IConcertService _concertService;

@@ -28,10 +28,10 @@ namespace TicketBooking.Controllers
             {
                 var a = _applicationDbContext.Users.FirstOrDefault(f => f.ID == accountViewModel.Id);
                 var b = _applicationDbContext.Accounts.FirstOrDefault(f => f.ID == accountViewModel.Id);
-                User newUser = null;
+                Client newUser = null;
                 if (a == null && b == null)
                 {
-                    _applicationDbContext.Users.Add(new User()
+                    _applicationDbContext.Users.Add(new Client()
                     {
                         Name = accountViewModel.Name,
                         Surname = accountViewModel.Surname

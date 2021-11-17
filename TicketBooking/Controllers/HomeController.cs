@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TicketBooking.Data.Interfaces;
-using TicketBooking.Data.Models;
-using TicketBooking.Models;
 using TicketBooking.ViewModels;
 
 namespace TicketBooking.Controllers
 {
+    [Authorize(Roles = "Пользователь, Администратор")]
     public class HomeController : Controller
     {
         //private readonly ILogger<HomeController> _logger;
@@ -22,13 +17,21 @@ namespace TicketBooking.Controllers
             _concertRepository = concertRepository;
         }
 
+        [AllowAnonymous]
         public ViewResult Index()
         {
-            var AllConcert = new HomeViewModel
-            {
-                concerts = _concertRepository.AllConcerts
-            };
-            return View(AllConcert);
+            //if (User.Identity.IsAuthenticated)
+            //{
+                var AllConcert = new HomeViewModel
+                {
+                    concerts = _concertRepository.AllConcerts
+                };
+                //var a = System.Security.Claims.ClaimsIdentity.DefaultNameClaimType.;
+                //Microsoft.AspNetCore.Http.HttpContext.User.Identity.Name;
+                //var a = HttpContext.User.Identity.Name;
+                return View(/*User.Identity.Name*/AllConcert);
+            //}
+            
         }
 
         //public HomeController(ILogger<HomeController> logger)

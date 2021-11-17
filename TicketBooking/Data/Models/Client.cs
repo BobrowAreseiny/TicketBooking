@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TicketBooking.Data.Models
 {
-    public class User
+    public class Client
     {
         [Key]
         public int ID { get; set; }
@@ -20,6 +20,11 @@ namespace TicketBooking.Data.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Поле Имя задано неверно")]
         [MinLength(10, ErrorMessage = "Ошибка, поле заполнено некорректно")]
         public string Surname { get; set; }
+
+        [Display(Name = "Введите дату рождения:")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true , DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime DateOfBirth { get; set; }
         
         public List<Account> Ticket { get; set; }
     }

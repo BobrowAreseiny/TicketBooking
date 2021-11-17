@@ -1,13 +1,14 @@
 ﻿@model CashBoxViewModel
 
 <div class="container">
+    <h1>Корзина</h1>
     @foreach (var el in Model.cashBox.tickets)
     {
-        <div class="alert alert-warning m-3">
-            <b>Концерт: </b>@el.Concert.ExectorName<br>
-            <b>Место: </b>@el.Concert.LocationOfConcert<br>
-            <b>Цена: </b>@el.Concert.Price<br>
-        </div>
+    <div class="alert alert-warning m-3">
+        <b>Концерт: @el.Concert.ExectorName</b><br>
+        <b>Место: @el.Concert.LocationOfConcert</b><br>
+        <b>Цена: @el.Concert.Price </b> @Html.ActionLink("X", "DelFromCashBox", new { id = el.ID }) 
+    </div>
     }
     <a class="btn btn-danger mb-5" asp-controller="Ticket" asp-action="Checkout">Купить</a>
 </div>

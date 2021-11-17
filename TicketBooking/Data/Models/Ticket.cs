@@ -17,7 +17,6 @@ namespace TicketBooking.Data.Models
         public int AccountID { get; set; }
         public int ConcertID { get; set; }
 
-
         public virtual Concert Concert { get; set; }
         public virtual Account Account { get; set; }      
 

@@ -3,10 +3,57 @@
     ViewData["Title"] = "Register";
 }
 
-<h1>Register</h1>
-@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+<h1>Регистрация</h1>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Имя</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label">Фамилия</label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login" class="control-label">Почта</label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label">Дата рождения</label>
+                <input asp-for="DateOfBirth" class="form-control"/>
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label">Пароль</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label">Подтверждение пароля</label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Зарегистрироваться" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.ActionLink("Войти", "Login")
+</div>
+
+@*@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
 {
-    if (ViewBag.Message != null)
+    @if (ViewBag.Message != null)
     {
         <div class="alert alert-success">
             <strong>Успех! </strong>@ViewBag.Message
@@ -15,24 +62,24 @@
 }
 else
 {
-   @using (Html.BeginForm("Register", "SelectedUser", FormMethod.Post))
+    @using (Html.BeginForm("Register", "SelectedUser", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>User</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
     <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Name, "Имя", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Name)
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Name, "Необходимо ввести Имя", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Surname, "Фамилия", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Surname, "Необходимо ввести Фамилию", new { @class = "text-danger" })
@@ -40,7 +87,7 @@ else
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Login, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Login, "Почта", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Login, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Login, "Необходимо ввести Email", new { @class = "text-danger" })
@@ -49,7 +96,15 @@ else
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.DateOfBirth, "Дата рождения", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, "Пароль", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
@@ -57,7 +112,7 @@ else
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.ConfirmPassword, "Подтвердите пароль", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
@@ -66,19 +121,17 @@ else
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Регистрация" class="btn btn-default" />
+                <input type="submit" value="Создать" class="btn btn-primary" />
         </div>
     </div>
 </div>
-        if (ViewBag.Message != null)
+        @if (ViewBag.Message != null)
         {
             <div class="alert alert-danger">
                 <strong>Ошибка! </strong>@ViewBag.Message
             </div>
         }
     }
-}
-<div class="form-group">
-    @Html.ActionLink("На главную", "Index", "Home")
-</div>
+}*@
+
 

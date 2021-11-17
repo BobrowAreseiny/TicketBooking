@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketBooking.Data;
 
 namespace TicketBooking.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211112102648_UpdatedUser")]
+    partial class UpdatedUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,6 +28,15 @@ namespace TicketBooking.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<Guid>("ActivateCode")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConfirnPassword")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsUserValid")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -34,42 +45,14 @@ namespace TicketBooking.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("RoleId");
-
                     b.HasIndex("UserID");
 
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("TicketBooking.Data.Models.Client", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("TicketBooking.Data.Models.Concert", b =>
@@ -105,21 +88,6 @@ namespace TicketBooking.Migrations
                     b.HasIndex("TypeOfConcertID");
 
                     b.ToTable("Concerts");
-                });
-
-            modelBuilder.Entity("TicketBooking.Data.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("TicketBooking.Data.Models.Ticket", b =>
@@ -186,19 +154,36 @@ namespace TicketBooking.Migrations
                     b.ToTable("TypeOfConcerts");
                 });
 
+            modelBuilder.Entity("TicketBooking.Data.Models.User", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("TicketBooking.Data.Models.Account", b =>
                 {
-                    b.HasOne("TicketBooking.Data.Models.Role", "Role")
-                        .WithMany("Accounts")
-                        .HasForeignKey("RoleId");
-
-                    b.HasOne("TicketBooking.Data.Models.Client", "User")
+                    b.HasOne("TicketBooking.Data.Models.User", "User")
                         .WithMany("Ticket")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Role");
 
                     b.Navigation("User");
                 });
@@ -238,24 +223,19 @@ namespace TicketBooking.Migrations
                     b.Navigation("Ticket");
                 });
 
-            modelBuilder.Entity("TicketBooking.Data.Models.Client", b =>
-                {
-                    b.Navigation("Ticket");
-                });
-
             modelBuilder.Entity("TicketBooking.Data.Models.Concert", b =>
                 {
                     b.Navigation("Ticket");
                 });
 
-            modelBuilder.Entity("TicketBooking.Data.Models.Role", b =>
-                {
-                    b.Navigation("Accounts");
-                });
-
             modelBuilder.Entity("TicketBooking.Data.Models.TypeOfConcert", b =>
                 {
                     b.Navigation("Concert");
+                });
+
+            modelBuilder.Entity("TicketBooking.Data.Models.User", b =>
+                {
+                    b.Navigation("Ticket");
                 });
 #pragma warning restore 612, 618
         }
