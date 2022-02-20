@@ -61,7 +61,6 @@ namespace TicketBooking
             //        policy.RequireClaim("company", "Microsoft");
             //    });
             //});
-            /////////////////////////
 
             services.AddTransient<IConcertCatalog, ConcertRepository>();
             services.AddTransient<IConcertTicket, TicketRepository>();
