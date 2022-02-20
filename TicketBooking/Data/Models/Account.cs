@@ -25,15 +25,15 @@ namespace TicketBooking.Data.Models
         [MinLength(10, ErrorMessage = "Ошибка, поле заполнено некорректно")]
         public string Password { get; set; }
 
-        public List<Ticket> Ticket { get; set; }
-
-        public int UserID { get; set; }          
-              
+        
+        public int UserID { get; set; }   
+        
         public virtual Client User { get; set; }
 
-        public int? RoleId { get; set; }
-
-        public virtual Role Role { get; set; }
-
+        public int RoleID { get; set; }      
+        
+        public virtual Role Role { get; set; } 
+        
+        public List<Ticket> Ticket { get; set; }          
     }
 }

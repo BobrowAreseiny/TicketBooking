@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using TicketBooking.Data.Models;
@@ -12,10 +13,11 @@ namespace TicketBooking.Data
         //public ApplicationDbContext() : base("DefaultConnection")
         //{
 
-        //}
+        //}       
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
         public DbSet<Concert> Concerts { get; set; }
         public DbSet<Ticket> Tickets { get; set; }

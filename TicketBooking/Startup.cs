@@ -2,20 +2,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using TicketBooking.Data;
 using TicketBooking.Data.Interfaces;
-using TicketBooking.Data.Mocks;
 using TicketBooking.Data.Models;
 using TicketBooking.Data.Repository;
 
@@ -24,18 +16,8 @@ namespace TicketBooking
     public class Startup
     {
 
-        private IConfigurationRoot _confString;
+        private readonly IConfigurationRoot _confString;
         public IConfiguration Configuration { get; }
-        //[Obsolete]
-        //public Startup(Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment)
-        //{
-        //    _confString = new ConfigurationBuilder().SetBasePath(hostingEnvironment.ContentRootPath).AddJsonFile("dbSettings.json").Build();
-        //}
-        //public Startup(IConfiguration configuration)
-        //{
-        //    Configuration = configuration;
-        //}
-        //
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -44,20 +26,26 @@ namespace TicketBooking
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(_confString.GetConnectionString("DefaultConnection")));
-            //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TicketBookingContext")));
-
+           
             ////////////////////////
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
+
+
+            //services.AddIdentity<Account, IdentityRole>(opts => {
+            //    opts.User.RequireUniqueEmail = true;    // уникальный email
+            //    opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz"; // допустимые символы
+            //}).AddEntityFrameworkStores<ApplicationDbContext>();
+
 
             // установка конфигурации подключения
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => //CookieAuthenticationOptions
                 {
                     options.LoginPath = new PathString("/SelectedUser/Login");
-                });
+                });                 
             services.AddControllersWithViews();
+
             /////////////////////////
             //services.AddAuthorization(opts => {
             //    opts.AddPolicy("OnlyAdmin", policy => {
@@ -80,9 +68,10 @@ namespace TicketBooking
             services.AddTransient<IAllOrders, OrderRepository>();
             services.AddTransient<IAdminRepository, AdminRepository>();
             services.AddTransient<IConcertService, ConcertService>();
+            services.AddTransient<IAutorisation, AutorisationRepository>();
+            services.AddTransient<IUserPage, UserPageRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
 
             services.AddScoped(sp => CashBox.GetTickets(sp));         
             services.AddMvc();  
@@ -107,7 +96,7 @@ namespace TicketBooking
             }
             app.UseSession();
             app.UseHttpsRedirection();
-            app.UseStaticFiles();            
+            app.UseStaticFiles();
             app.UseRouting();
             //app.UseSession();
 

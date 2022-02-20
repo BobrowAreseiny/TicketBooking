@@ -2,61 +2,53 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h2>List of Concerts</h2>
+
 @Html.ActionLink("Register New", "AddConcert")
-<table class="table">
+<table class="table_col">
+    @*<colgroup>
+        <col style="background:#C7DAF0;">
+    </colgroup>*@
     <tr>
-        <th>
-            ExectorName
-        </th>
-        <th>
-            DateOfConcert
-        </th>
-        <th>
-            CountOfTicket
-        </th>
-        <th>
-            LocationOfConcert
-        </th>
-        <th>
-            Price
-        </th>
-        <th>
-            Img
-        </th>
+        <th> Название группы </th>
+        <th> Дата концерта </th>
+        <th> Количество билетов </th>
+        <th> Место проведения </th>
+        <th> Цена </th>
+        <th> Картинка </th>
     </tr>
-    @foreach (var item in Model)
-     {
+   @foreach (var item in Model)
+    {
         <tr>
-            <td>
+            <th>
                 @Html.DisplayFor(model => item.ExectorName)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayFor(model => item.DateOfConcert)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayFor(model => item.CountOfTicket)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayFor(model => item.ExectorName)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayFor(model => item.LocationOfConcert)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayFor(model => item.Price)
-            </td>
-            <td>
+            </th>
+            <th>
                 @Html.DisplayFor(model => item.Img)
-            </td>   
-            <td>
-                @Html.ActionLink("Edit","EditConcert", new { id = item.ID})
-            
-                @Html.ActionLink("Details", "DetailsOfConcert", new { id = item.ID})
-            
-                @Html.ActionLink("Delete", "DeleteConcert", new { id = item.ID})
-            </td>
+            </th>
+            <th>
+                @Html.ActionLink("Edit", "EditConcert", new { id = item.ID })
+
+                @Html.ActionLink("Details", "DetailsOfConcert", new { id = item.ID })
+
+                @Html.ActionLink("Delete", "DeleteConcert", new { id = item.ID })
+            </th>
         </tr>
-     }
+    }
 </table>
 
+<link href="~/css/Style.css" rel="stylesheet" type="text/css"/>

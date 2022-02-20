@@ -1,0 +1,46 @@
+﻿@model UserPageViewModel
+@{
+    ViewData["Title"] = "Изменить данные";
+}
+
+<h1>Изменить данные пользователя</h1>
+
+@using (Html.BeginForm())
+{
+<fieldset>
+    @Html.HiddenFor(model => model.Account.ID)
+    @Html.HiddenFor(model => model.Client.ID)
+    <br>
+    <p>
+        @Html.LabelFor(model => model.Client.Name, "Имя")
+        <br>
+        @Html.EditorFor(model => model.Client.Name)
+        <br>
+    </p>
+    <p>
+        @Html.LabelFor(model => model.Client.Surname, "Фамилия")
+        <br>
+        @Html.EditorFor(model => model.Client.Surname)
+        <br>
+    </p>
+    <p>
+        @Html.LabelFor(model => model.Client.DateOfBirth, "Дата рождения")
+        <br>
+        @Html.EditorFor(model => model.Client.DateOfBirth)
+        <br>
+    </p>
+    <p>
+        @Html.LabelFor(model => model.Account.Login, "Email")
+        <br>
+        @Html.EditorFor(model => model.Account.Login)
+        <br>
+    </p>
+    <p>
+        @Html.LabelFor(model => model.Account.Password, "Пароль")
+        <br>
+        @Html.EditorFor(model => model.Account.Password)
+        <br>
+    </p>
+    <p><input type="submit" value="Изменить"></p>
+</fieldset>
+}

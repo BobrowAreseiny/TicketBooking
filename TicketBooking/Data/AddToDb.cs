@@ -19,7 +19,7 @@ namespace TicketBooking.Data
             if (!context.Concerts.Any())
             {
                 context.Concerts.AddRange(Concerts.Select(c => c.Value));
-            } 
+            }
             if (!context.Roles.Any())
             {
                 context.Roles.AddRange(Roles.Select(c => c.Value));
@@ -27,7 +27,7 @@ namespace TicketBooking.Data
             if (!context.Users.Any())
             {
                 context.Users.AddRange(Users.Select(c => c.Value));
-            }        
+            }
             if (!context.Accounts.Any())
             {
                 context.Accounts.AddRange(Accounts.Select(c => c.Value));
@@ -52,7 +52,9 @@ namespace TicketBooking.Data
                         new TypeOfConcert{ TypeOfThisConcert = "Опэнэйр", Healiner="Дурной Вкус" },
                         new TypeOfConcert{ TypeOfThisConcert = "Вечеринка", AgeLimit = "18" }
                     };
+
                     typeOfConcert = new Dictionary<string, TypeOfConcert>();
+
                     foreach (var el in list)
                     {
                         typeOfConcert.Add(el.TypeOfThisConcert, el);
@@ -74,7 +76,9 @@ namespace TicketBooking.Data
                         new Concert{ DateOfConcert=new DateTime(2021,10,01), ExectorName="Metalica", CountOfTicket=100, LocationOfConcert="Минск", Price = 40, Img="/img/Metallica.png", TypeOfConcert = TypeOfConcerts["Опэнэйр"]},
                         new Concert{ DateOfConcert=new DateTime(2020,10,01), ExectorName="Fluer", CountOfTicket=10000, LocationOfConcert="Минск", Price = 100, Img="/img/Fleur.png", TypeOfConcert = TypeOfConcerts["Вечеринка"]}
                     };
+
                     concert = new Dictionary<string, Concert>();
+
                     foreach (var el in list)
                     {
                         concert.Add(el.ExectorName, el);
@@ -96,7 +100,9 @@ namespace TicketBooking.Data
                         new Role{ Name = "Пользователь" },
                         new Role{ Name = "Администратор" }
                     };
+
                     role = new Dictionary<string, Role>();
+
                     foreach (var el in list)
                     {
                         role.Add(el.Name, el);
@@ -115,10 +121,12 @@ namespace TicketBooking.Data
                 {
                     var list = new Client[]
                     {
-                        new Client{ Name = "Арсений", Surname = "Бобров", DateOfBirth = new DateTime(2000,10,10) },
-                        new Client{ Name="Пастэрнак", Surname = "Владислав" , DateOfBirth = new DateTime(2002,10,10)}
+                        new Client{ Name = "Арсений", Surname = "Бобров", DateOfBirth = new DateTime(2000,10,10)},
+                        new Client{ Name = "Пастэрнак", Surname = "Владислав" , DateOfBirth = new DateTime(2002,10,10)}
                     };
+
                     user = new Dictionary<string, Client>();
+
                     foreach (var el in list)
                     {
                         user.Add(el.Name, el);
@@ -128,7 +136,8 @@ namespace TicketBooking.Data
             }
         }
 
-        
+
+
         private static Dictionary<string, Account> account;
         public static Dictionary<string, Account> Accounts
         {
@@ -138,10 +147,12 @@ namespace TicketBooking.Data
                 {
                     var list = new Account[]
                     {
-                        new Account{ Login="Frukt9809@gmail.com", Password="a225119283A", User = Users["Арсений"], Role = Roles["Администратор"] },
-                        new Account{ Login="Amogus@gmail.com", Password="1111", User = Users["Пастэрнак"] , Role= Roles["Пользователь"] }
+                        new Account{ Login = "Frukt9809@gmail.com", Password = Crypto.Hash("a225119283A"), User = Users["Арсений"], Role = Roles["Администратор"] },
+                        new Account{ Login = "Amogus@gmail.com", Password = Crypto.Hash("1111"), User = Users["Пастэрнак"] , Role = Roles["Пользователь"] }
                     };
+
                     account = new Dictionary<string, Account>();
+
                     foreach (var el in list)
                     {
                         account.Add(el.Login, el);
@@ -150,7 +161,7 @@ namespace TicketBooking.Data
                 return account;
             }
         }
-       
+
         private static Dictionary<string, Ticket> tickets;
         public static Dictionary<string, Ticket> Tickets
         {
@@ -163,7 +174,9 @@ namespace TicketBooking.Data
                         new Ticket{Account =  Accounts["Frukt9809@gmail.com"], ByTime = DateTime.Now, Concert = Concerts["Metalica"], Price=100},
                         new Ticket{Account =  Accounts["Amogus@gmail.com"], ByTime = DateTime.Now, Concert = Concerts["Fluer"], Price=200}
                     };
+
                     tickets = new Dictionary<string, Ticket>();
+
                     foreach (var el in list)
                     {
                         tickets.Add(el.Account.Login, el);
@@ -172,5 +185,5 @@ namespace TicketBooking.Data
                 return tickets;
             }
         }
-    } 
+    }
 }

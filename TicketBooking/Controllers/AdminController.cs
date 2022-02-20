@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using TicketBooking.Data.Interfaces;
 using TicketBooking.Data.Models;
 using TicketBooking.ViewModels;
@@ -9,42 +10,55 @@ namespace TicketBooking.Controllers
     [Authorize(Roles = "Администратор")]
     public class AdminController : Controller
     {
-        private readonly IConcertService _concertService;
+        private readonly IAdminRepository _concertService;
 
-        public AdminController(IConcertService concertService)
+        public AdminController(IAdminRepository concertService)
         {
             _concertService = concertService;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var concert = _concertService.GetConcert();
+            var concert = await _concertService.GetConcertsAsync();
+
             return View(concert);
         }
 
-        //public ActionResult AddConcert()
-        //{
-        //    var conNew = new ConcertViewModel
-        //    {
-        //         Title="Добавить новый кноцерт",
-        //         AddButtonTitle ="Добавить",
-        //         RedirectUrl = Url.Action("Index", "Concert")
-        //    };
-        //    return View(conNew);
-        //}
+        [HttpGet]
+        public ActionResult AddDescription()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddDescription(ConcertDescriptionViewModel description)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var typeOfConcert = new TypeOfConcert()
+            {
+                ID = description.ID,
+                Composer = description.Composer,
+                AgeLimit = description.AgeLimit,
+                Healiner = description.Healiner,
+                NameOfConcert = description.NameOfConcert,
+                TypeOfThisConcert = description.TypeOfThisConcert,
+                TypeOfVoice = description.TypeOfVoice,
+                Way = description.Way
+            };
+            await _concertService.AddDescriptionConcertAsync(typeOfConcert);
+            return RedirectToAction("AddDescription");
+        }
+
+
         [HttpGet]
         public ActionResult AddConcert()
         {
-            var conNew = new ConcertViewModel
-            {
-                Title = "Добавить новый кноцерт",
-                AddButtonTitle = "Добавить",
-                RedirectUrl = Url.Action("Index", "Concert")
-            };
-            return View(conNew);
+            return View();
         }
         [HttpPost]
-        public ActionResult AddConcert(ConcertViewModel concertViewModel)
+        public async Task<ActionResult> AddConcert(ConcertViewModel concertViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -61,60 +75,13 @@ namespace TicketBooking.Controllers
                 LocationOfConcert = concertViewModel.LocationOfConcert,
                 TypeOfConcertID = concertViewModel.TypeOfConcertID
             };
-
-            _concertService.AddConcert(concert);
+            await _concertService.AddConcertAsync(concert);
             return RedirectToAction("Index");
         }
-        public ActionResult DetailsOfConcert(int id)
-        {
-            var concert = _concertService.GetSelectedConcert(id);
-            return View(new ConcertViewModel
-            {
-                Id = concert.ID,
-                ExectorName = concert.ExectorName,
-                CountOfTicket = concert.CountOfTicket,
-                DateOfConcert = concert.DateOfConcert,
-                Price = concert.Price,
-                Img = concert.Img,
-                LocationOfConcert = concert.LocationOfConcert
-            });
-        }
-
-
         [HttpGet]
-        public ActionResult SaveConcert(int id/*, string redirectUrl*/)
+        public async Task<ActionResult> EditConcert(int id)
         {
-            var concert = _concertService.GetSelectedConcert(id);
-            return View(concert);
-        }
-
-        [HttpPost]
-        public ActionResult SaveConcert(ConcertViewModel concertViewModel/*, string redirectUrl*/)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(concertViewModel);
-            }
-            var concert = _concertService.GetSelectedConcert(concertViewModel.Id);
-            if (concert != null)
-            {
-                concert.ID = concertViewModel.Id;
-                concert.LocationOfConcert = concertViewModel.LocationOfConcert;
-                concert.ExectorName = concertViewModel.ExectorName;
-                concert.CountOfTicket = concertViewModel.CountOfTicket;
-                concert.DateOfConcert = concertViewModel.DateOfConcert;
-                concert.Price = concertViewModel.Price;
-                concert.Img = concertViewModel.Img;
-                _concertService.UpdateConcert(concert);
-            }
-            return RedirectToAction("Index");
-            //return RedirectToLocation(redirectUrl);
-        }
-
-        [HttpGet]
-        public ActionResult EditConcert(int id)
-        {
-            var concert = _concertService.GetSelectedConcert(id);
+            var concert = await _concertService.GetSelectedConcertAsync(id);
             ConcertViewModel concertViewModel = new ConcertViewModel
             {
                 Id = concert.ID,
@@ -128,13 +95,13 @@ namespace TicketBooking.Controllers
             return View(concertViewModel);
         }
         [HttpPost]
-        public ActionResult EditConcert(ConcertViewModel concertViewModel)
+        public async Task<ActionResult> EditConcert(ConcertViewModel concertViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(concertViewModel);
             }
-            var concert = _concertService.GetSelectedConcert(concertViewModel.Id);
+            var concert = await _concertService.GetSelectedConcertAsync(concertViewModel.Id);
             if (concert != null)
             {
                 concert.ID = concertViewModel.Id;
@@ -144,70 +111,57 @@ namespace TicketBooking.Controllers
                 concert.DateOfConcert = concertViewModel.DateOfConcert;
                 concert.Price = concertViewModel.Price;
                 concert.Img = concertViewModel.Img;
-                _concertService.UpdateConcert(concert);
+                await _concertService.UpdateConcertAsync(concert);
             }
             return RedirectToAction("Index");
         }
 
-
-        public ActionResult DeleteConcert(int id)
+        public async Task<ActionResult> DetailsOfConcert(int id)
         {
-            _concertService.DeleteConcert(id);
+            var concert = await _concertService.GetSelectedConcertAsync(id);
+            return View(new ConcertViewModel
+            {
+                Id = concert.ID,
+                ExectorName = concert.ExectorName,
+                CountOfTicket = concert.CountOfTicket,
+                DateOfConcert = concert.DateOfConcert,
+                Price = concert.Price,
+                Img = concert.Img,
+                LocationOfConcert = concert.LocationOfConcert
+            });
+        }
+
+        public async Task<ActionResult> DeleteConcert(int id)
+        {
+            await _concertService.DeleteConcertAsync(id);
             return RedirectToAction("Index");
         }
 
+        //[HttpGet]
+        //public async Task<ActionResult> SaveConcert(int id)
+        //{
+        //    var concert = await _concertService.GetSelectedConcertAsync(id);
+        //    return View(concert);
+        //}
         //[HttpPost]
-        //public ActionResult AddNewConcert(ConcertViewModel concertViewModel, string redirectUrl)
+        //public async Task<ActionResult> SaveConcert(ConcertViewModel concertViewModel)
         //{
         //    if (!ModelState.IsValid)
         //    {
-        //        return View();
+        //        return View(concertViewModel);
         //    }
-        //    var concert = new Concert()
+        //    var concert = await _concertService.GetSelectedConcertAsync(concertViewModel.Id);
+        //    if (concert != null)
         //    {
-        //        ID = concertViewModel.Id,
-        //        ExectorName = concertViewModel.ExectorName,
-        //        CountOfTicket = concertViewModel.CountOfTicket,
-        //        DateOfConcert = concertViewModel.DateOfConcert,
-        //        Price = concertViewModel.Price,
-        //        Img = concertViewModel.Img,
-        //        LocationOfConcert = concertViewModel.LocationOfConcert
-        //    };
-        //    return RedirectToLocation(redirectUrl);
-        //}
-
-        //private ActionResult RedirectToLocation(string redirectUrl)
-        //{
-        //    if (Url.IsLocalUrl(redirectUrl))
-        //    {
-        //        return Redirect(redirectUrl);
+        //        concert.ID = concertViewModel.Id;
+        //        concert.LocationOfConcert = concertViewModel.LocationOfConcert;
+        //        concert.ExectorName = concertViewModel.ExectorName;
+        //        concert.CountOfTicket = concertViewModel.CountOfTicket;
+        //        concert.DateOfConcert = concertViewModel.DateOfConcert;
+        //        concert.Price = concertViewModel.Price;
+        //        concert.Img = concertViewModel.Img;
+        //        await _concertService.UpdateConcertAsync(concert);
         //    }
-        //    return RedirectToAction("Index", "Concert");
-        //}
-
-
-
-
-
-
-        //public async Task<ActionResult> Index()
-        //{
-        //    var concert = _concertService.GetConcertAsync();
-        //    return View(concert);
-        //}
-
-        //public ActionResult AddConcert()
-        //{
-        //    return View();
-        //}
-
-        //public ActionResult EditConcert()
-        //{
-        //    return View();
-        //}
-
-        //public ActionResult DeleteConcert()
-        //{
         //    return RedirectToAction("Index");
         //}
     }

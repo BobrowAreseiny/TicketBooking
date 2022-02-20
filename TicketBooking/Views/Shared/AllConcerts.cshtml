@@ -19,10 +19,10 @@
             <span class="product-price">₽ @Model.Price</span>
         </div>
     </div>*@
-<div class="wrapper">
+<!--<div class="wrapper">
     <div class="flex">
         <div class="product-item">
-            <img src="@Model.Img">
+            <img--> @*class="w-100"*@ <!--src="@Model.Img">
             <div class="product-list">
                 <h3>@Model.ExectorName</h3>
                 <div class="price">₽ @Model.Price</div>
@@ -30,4 +30,19 @@
             </div>
         </div>
     </div>
+</div>-->
+<div class="container-xxl">
+    <div class="flex">
+        <div class="product-item">          
+            <div class="product-list">
+                <img src="@Model.Img">
+                <h3>@Model.ExectorName</h3>
+                <div class="price">₽ @Model.Price</div>
+                <div><a class="button" asp-controller="CashBox" asp-action="addToCashBox" asp-route-ID="@Model.ID">В корзину</a></div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="~/css/Style.css" rel="stylesheet" type="text/css" />

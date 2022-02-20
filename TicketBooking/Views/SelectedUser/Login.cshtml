@@ -5,8 +5,6 @@
 }
 
 <h1>Вход</h1>
-
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Login">
@@ -21,15 +19,15 @@
                 <input asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Войти" class="btn btn-primary" />
+                <input type="submit" value="Войти" id="submit" class="btn btn-primary" />             
+            </div>
+            <div class="form-group">                
+                <a id="submit" asp-controller="SelectedUser" asp-action="Register" class="btn btn-primary">Регистрация</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    @*@Html.ActionLink("Создать", "Register")*@
-    <a asp-action="Register">Регистрация</a>
-</div>
-
+@*<link href="~/css/LoginStyle.css" rel="stylesheet" type="text/css" />*@

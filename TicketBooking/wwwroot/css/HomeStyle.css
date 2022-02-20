@@ -1,10 +1,13 @@
 ﻿* {
     box-sizing: border-box; 
+
 }
-background-color: #ccb188;
 
 .body {
     background-color: #ccb188;
+    font: 12px 'Lucida Sans Unicode', 'Trebuchet MS', Arial, Helvetica;
+    margin: 0;
+    background: url(images/bg.png) repeat;
 }
 
 .wrapper {

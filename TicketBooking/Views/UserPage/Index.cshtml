@@ -1,1 +1,41 @@
-﻿
+﻿@model UserPageViewModel
+
+@{
+    ViewData["Title"] = "Профиль";
+}
+        <div>
+            <div class="product-list">
+                <h3>@Model.Account.Login</h3>
+                <div>₽ @Model.Client.Name</div>
+                <div>₽ @Model.Client.Surname</div>
+                <div>₽ @Model.Client.DateOfBirth</div>
+                @Html.ActionLink("Edit", "ChangeInfo")
+            </div>
+        </div>
+<table class="table">
+    <tr>
+        <th>
+            Время покупки
+        </th>
+        <th>
+            Концерт
+        </th>
+        <th>
+            Цена
+        </th>
+    </tr>
+   @foreach (var item in Model.GetAllTicket)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.ByTime)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.ConcertID)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Price)
+            </td>
+        </tr>
+    }
+</table>

@@ -8,16 +8,16 @@ namespace TicketBooking.Data.Interfaces
 {
     public interface IConcertService
     {
-        IEnumerable<Concert> GetConcert();
-        Concert GetSelectedConcert(int id);
-        Concert AddConcert(Concert concert);
-        Concert DeleteConcert(int id);
-        Concert UpdateConcert(Concert concert);
+        //IEnumerable<Concert> GetConcertAsync();
+        //Concert GetSelectedConcertAsync(int id);
+        //Concert AddConcertAsync(Concert concert);
+        //Concert DeleteConcertAsync(int id);
+        //Concert UpdateConcertAsync(Concert concert);
 
-        //Task<IEnumerable<Concert>> GetConcertAsync();
-        //Task<Concert> GetOneConcertAsync(int id);
-        //Task<Concert> AddConcertAsync(Concert concert);
-        //Task<Concert> DeleteConcertAsync(int id);
-        //Task<Concert> UpdateConcertAsync(Concert concert);
+        Task<IEnumerable<Concert>> GetConcertsAsync();
+        Task<Concert> GetSelectedConcertAsync(int id);
+        Task<Concert> AddConcertAsync(Concert concert);
+        Task<Concert> DeleteConcertAsync(int id);
+        Task<Concert> UpdateConcertAsync(Concert concert);
     }
 }

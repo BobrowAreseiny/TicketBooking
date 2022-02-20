@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TicketBooking.Data;
+using TicketBooking.Data.Interfaces;
+using TicketBooking.Data.Models;
 using TicketBooking.ViewModels;
 
 namespace TicketBooking.Controllers
@@ -12,24 +12,56 @@ namespace TicketBooking.Controllers
     [Authorize]
     public class UserPageController : Controller
     {
-        private readonly ApplicationDbContext _applicationDbContext;
-        public UserPageController(ApplicationDbContext applicationDbContext)
+        private readonly IUserPage _userPage;
+
+        public UserPageController(IUserPage userPage)
         {
-            _applicationDbContext = applicationDbContext;
+            _userPage = userPage;
         }
 
-        public IActionResult Index(UserPageViewModel userPageViewModel)
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            var account = _applicationDbContext.Accounts.Where(p => p.Login == User.Identity.Name).FirstOrDefault();
-            
-            var user = _applicationDbContext.Users.Where(p => p.ID == account.UserID).FirstOrDefault();
+            Account account = await _userPage.GetUserAccountAsync(User.Identity.Name);
 
-            var ticket = _applicationDbContext.Tickets.Where(p => p.AccountID == account.ID).ToList();
+            Client client = await _userPage.GetClientAsync(account.UserID);
 
-            userPageViewModel.Client = user;
-            userPageViewModel.Account = account;
-            userPageViewModel.GetAllTicket = ticket;
+            UserPageViewModel userPageViewModel = new UserPageViewModel
+            {
+                Account = account,
+                Client = client,
+                GetAllTicket = await _userPage.GetClientTiketAsync(account)
+            };
+
             return View(userPageViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangeInfo()
+        {
+            Account account = await _userPage.GetUserAccountAsync(User.Identity.Name);
+
+            Client client = await _userPage.GetClientAsync(account.UserID);
+
+            UserPageViewModel userPageViewModel = new UserPageViewModel
+            {
+                Account = account,
+                Client = client,
+            };
+
+            userPageViewModel.Account.Password = Crypto.Hash(userPageViewModel.Account.Password);
+
+            return View(userPageViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeInfo(UserPageViewModel userPageViewModel)
+        {
+            await _userPage.ChangeClientData(userPageViewModel.Client);
+
+            await _userPage.ChangeAccountData(userPageViewModel.Account);
+
+            return RedirectToAction("Index");
         }
     }
 }

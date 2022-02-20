@@ -9,6 +9,7 @@ namespace TicketBooking.ViewModels
     public class ConcertListViewModel
     {
         public string currConcert { get; set; }
+
         public IEnumerable<Concert> GetAllConcerts { get; set; }
     }
 }

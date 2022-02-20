@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TicketBooking.Data.Interfaces;
 using TicketBooking.Data.Models;
 
@@ -13,25 +14,25 @@ namespace TicketBooking
             _adminRepository = adminRepository;
         }
 
-        public IEnumerable<Concert> GetConcert()
+        public async Task<IEnumerable<Concert>> GetConcertsAsync()
         {
-            return _adminRepository.GetConcert();
+            return await _adminRepository.GetConcertsAsync();
         }
-        public Concert GetSelectedConcert(int id)
+        public async Task<Concert> GetSelectedConcertAsync(int id)
         {
-            return _adminRepository.GetSelectedConcert(id);
+            return await _adminRepository.GetSelectedConcertAsync(id);
         }
-        public Concert AddConcert(Concert concert)
+        public async Task<Concert> AddConcertAsync(Concert concert)
         {
-            return _adminRepository.AddConcert(concert);
+            return await _adminRepository.AddConcertAsync(concert);
         }
-        public Concert DeleteConcert(int id)
+        public async Task<Concert> DeleteConcertAsync(int id)
         {
-            return _adminRepository.DeleteConcert(id);
+            return await _adminRepository.DeleteConcertAsync(id);
         }
-        public Concert UpdateConcert(Concert concert)
+        public async Task<Concert> UpdateConcertAsync(Concert concert)
         {
-            return _adminRepository.UpdateConcert(concert);
+            return await _adminRepository.UpdateConcertAsync(concert);
         }
 
         //public async Task<Concert> GetOneConcertAsync(int id)

@@ -10,6 +10,7 @@ namespace TicketBooking.Data.Mocks
     public class MockTickets : IConcertTicket
     {
         private readonly IConcertCatalog _concertCatalog;
+
         public IEnumerable<Ticket> Tickets
         {
             get
@@ -19,6 +20,7 @@ namespace TicketBooking.Data.Mocks
                     new Ticket { Concert = _concertCatalog.AllConcerts.First() },
                     new Ticket { Concert = _concertCatalog.AllConcerts.Last() }
                 };
-            } set => throw new NotImplementedException(); }
+            } 
+            set => throw new NotImplementedException(); }
         }
     }

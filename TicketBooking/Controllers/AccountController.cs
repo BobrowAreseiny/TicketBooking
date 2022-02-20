@@ -48,9 +48,7 @@ namespace TicketBooking.Controllers
 
                     if (a != null && b != null)
                     {
-                        //Session["userId"] = 
-                        //FormsAuthentication.SetAuthCockie(accountViewModel.Name, true);
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction(Request.Headers["Referer"].ToString());
                     }
                 }
                 else

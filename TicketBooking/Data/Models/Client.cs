@@ -24,8 +24,6 @@ namespace TicketBooking.Data.Models
         [Display(Name = "Введите дату рождения:")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true , DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime DateOfBirth { get; set; }
-        
-        public List<Account> Ticket { get; set; }
+        public DateTime DateOfBirth { get; set; }     
     }
 }

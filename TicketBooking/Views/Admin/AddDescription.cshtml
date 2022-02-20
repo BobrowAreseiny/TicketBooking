@@ -1,0 +1,44 @@
+﻿
+@model ConcertDescriptionViewModel
+@{
+    ViewData["Title"] = "Добавление описания";
+}
+
+<h1>AddConcert</h1>
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.Composer, "Композитор")
+    <br>
+    @Html.EditorFor(model => model.Composer)
+    <br>
+
+    @Html.LabelFor(model => model.Healiner, "Хедлайнер")
+    <br>
+    @Html.EditorFor(model => model.Healiner)
+    <br>
+
+    @Html.LabelFor(model => model.TypeOfThisConcert, "Тип концерта")
+    <br>
+    @Html.EditorFor(model => model.TypeOfThisConcert)
+    <br>
+
+    @Html.LabelFor(model => model.TypeOfVoice, "Тембр голоса")
+    <br>
+    @Html.EditorFor(model => model.TypeOfVoice)
+    <br>
+
+    @Html.LabelFor(model => model.AgeLimit, "Возрастное ограничение")
+    <br>
+    @Html.EditorFor(model => model.AgeLimit)
+    <br>
+
+    @Html.LabelFor(model => model.NameOfConcert, "Название концерта")
+    <br>
+    @Html.EditorFor(model => model.NameOfConcert)
+    <br>
+    @Html.LabelFor(model => model.Way, "Путь")
+    <br>
+    @Html.EditorFor(model => model.Way)
+    <br>
+    <input type="submit" value="Добавить" />
+}
